@@ -251,7 +251,24 @@
 
         return price;
       };
+<script>
+let basePrice = 179000;
+let totalPrice = basePrice;
 
+// Update price when options change
+document.querySelectorAll('.option-toggle').forEach(el => {
+  el.addEventListener('change', function() {
+    calculatePrice();
+  });
+});
+
+function calculatePrice() {
+  totalPrice = basePrice;
+  // Add logic for each option
+  document.getElementById('price-display').textContent = 
+    '$' + totalPrice.toLocaleString();
+}
+</script>
       const calculateRebates = () => {
         let rebates = 0;
         
@@ -929,3 +946,4 @@
   </script>
 </body>
 </html>
+
