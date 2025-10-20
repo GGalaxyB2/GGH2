@@ -3,46 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green Galaxy ADU - Your Dream ADU in 5 Months | Sacramento & Bay Area</title>
-  <meta name="description" content="Factory-built ADUs in 5-6 months. Turnkey service from permits to move-in. Serving Sacramento and Bay Area. Licensed contractor CSLB #1035074.">
+  <title>Green Galaxy Builders - Net-Zero ADUs | Sacramento & Bay Area</title>
+  <meta name="description" content="Build your dream net-zero ADU. Factory-built with SIP panels, solar, battery backup. Tesla Powerwall certified. $20K+ in rebates available.">
   
-  <!-- React & Dependencies from CDN -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      background: #111827;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #0a0a0a;
       color: #fff;
     }
-    #root {
-      min-height: 100vh;
+    
+    /* Custom green/orange gradients */
+    .bg-brand-gradient { background: linear-gradient(135deg, #1a4d2e 0%, #f57c00 100%); }
+    .text-brand-green { color: #4ade80; }
+    .text-brand-orange { color: #fb923c; }
+    .border-brand-green { border-color: #4ade80; }
+    .glow-green { box-shadow: 0 0 20px rgba(74, 222, 128, 0.3); }
+    .glow-orange { box-shadow: 0 0 20px rgba(251, 146, 60, 0.3); }
+    
+    /* Futuristic effects */
+    .glass-effect {
+      background: rgba(26, 77, 46, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(74, 222, 128, 0.2);
     }
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
+    
+    .neon-border {
+      border: 2px solid #4ade80;
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.5), inset 0 0 10px rgba(74, 222, 128, 0.2);
     }
-    ::-webkit-scrollbar-track {
-      background: #1f2937;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #4b5563;
-      border-radius: 5px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #6b7280;
-    }
+    
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #1a1a1a; }
+    ::-webkit-scrollbar-thumb { background: #1a4d2e; border-radius: 5px; }
   </style>
 </head>
 <body>
@@ -51,76 +51,58 @@
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
-    // Lucide Icons as SVG components
+    // Icons
     const Icon = ({ children, size = 24, className = "" }) => (
-      <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
         {children}
       </svg>
     );
 
-    const HomeIcon = (props) => <Icon {...props}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></Icon>;
-    const SettingsIcon = (props) => <Icon {...props}><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m5.2-13.2 4.2-4.2m-5.6 5.6-4.2-4.2M23 12h-6m-6 0H5m13.2 5.2 4.2 4.2m-5.6-5.6-4.2 4.2"/></Icon>;
-    const InfoIcon = (props) => <Icon {...props}><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></Icon>;
-    const BookIcon = (props) => <Icon {...props}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></Icon>;
-    const MenuIcon = (props) => <Icon {...props}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></Icon>;
-    const XIcon = (props) => <Icon {...props}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></Icon>;
-    const ChevronRightIcon = (props) => <Icon {...props}><polyline points="9 18 15 12 9 6"/></Icon>;
-    const CheckIcon = (props) => <Icon {...props}><polyline points="20 6 9 17 4 12"/></Icon>;
-    const StarIcon = (props) => <Icon {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Icon>;
-    const ClockIcon = (props) => <Icon {...props}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></Icon>;
-    const DollarIcon = (props) => <Icon {...props}><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></Icon>;
-    const MaximizeIcon = (props) => <Icon {...props}><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></Icon>;
-    const PaletteIcon = (props) => <Icon {...props}><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></Icon>;
-    const WrenchIcon = (props) => <Icon {...props}><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></Icon>;
-    const EyeIcon = (props) => <Icon {...props}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></Icon>;
-    const CameraIcon = (props) => <Icon {...props}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></Icon>;
-    const UsersIcon = (props) => <Icon {...props}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Icon>;
-    const MailIcon = (props) => <Icon {...props}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></Icon>;
-    const PhoneIcon = (props) => <Icon {...props}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>;
-    const MapPinIcon = (props) => <Icon {...props}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></Icon>;
-    const SendIcon = (props) => <Icon {...props}><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></Icon>;
-    const ImageIcon = (props) => <Icon {...props}><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></Icon>;
-    const CalculatorIcon = (props) => <Icon {...props}><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></Icon>;
-    const LightbulbIcon = (props) => <Icon {...props}><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></Icon>;
-    const ZapIcon = (props) => <Icon {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
+    const HomeIcon = (p) => <Icon {...p}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></Icon>;
+    const SettingsIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6"/></Icon>;
+    const ZapIcon = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
+    const LeafIcon = (p) => <Icon {...p}><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></Icon>;
+    const BatteryIcon = (p) => <Icon {...p}><rect width="16" height="10" x="2" y="7" rx="2" ry="2"/><line x1="22" x2="22" y1="11" y2="13"/></Icon>;
+    const SunIcon = (p) => <Icon {...p}><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></Icon>;
+    const HomeModernIcon = (p) => <Icon {...p}><path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v3M16 14v3M12 14v3"/></Icon>;
+    const ShieldIcon = (p) => <Icon {...p}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></Icon>;
+    const TrendingUpIcon = (p) => <Icon {...p}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></Icon>;
+    const DollarIcon = (p) => <Icon {...p}><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></Icon>;
+    const CheckIcon = (p) => <Icon {...p}><polyline points="20 6 9 17 4 12"/></Icon>;
+    const MenuIcon = (p) => <Icon {...p}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></Icon>;
+    const XIcon = (p) => <Icon {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></Icon>;
+    const ChevronRightIcon = (p) => <Icon {...p}><polyline points="9 18 15 12 9 6"/></Icon>;
+    const DropletIcon = (p) => <Icon {...p}><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></Icon>;
+    const ThermometerIcon = (p) => <Icon {...p}><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></Icon>;
 
-    const ADUWebsite = () => {
+    const GreenGalaxyWebsite = () => {
       const [currentPage, setCurrentPage] = useState('home');
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const [selectedBlogPost, setSelectedBlogPost] = useState(null);
-      const [selectedConfig, setSelectedConfig] = useState({
-        model: 'studio',
-        exteriorColor: 'charcoal',
-        finish: 'premium',
-        solarPanels: true,
-        patio: false,
-        flooring: 'luxury-vinyl',
-        fixtures: 'premium',
-        appliances: 'stainless',
-        smartHome: false,
-        hvac: 'heat-pump'
+      
+      const [config, setConfig] = useState({
+        model: 'eco',
+        size: 600,
+        construction: 'sip',
+        solar: 5,
+        battery: true,
+        hvac: 'heat-pump',
+        smartHome: 'premium',
+        evCharger: true,
+        greenRoof: false,
+        rainwater: false,
+        exteriorColor: 'forest-green',
+        interiorFinish: 'modern'
       });
 
       const canvasRef = useRef(null);
       const sceneRef = useRef(null);
-      const rendererRef = useRef(null);
       const aduRef = useRef(null);
 
       useEffect(() => {
         if (!canvasRef.current || typeof THREE === 'undefined') return;
 
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x1a1a2e);
+        scene.background = new THREE.Color(0x0a0a0a);
         sceneRef.current = scene;
 
         const camera = new THREE.PerspectiveCamera(75, canvasRef.current.clientWidth / canvasRef.current.clientHeight, 0.1, 1000);
@@ -129,25 +111,24 @@
 
         const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
         renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientHeight);
-        rendererRef.current = renderer;
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
 
-        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight1.position.set(5, 10, 5);
-        scene.add(directionalLight1);
+        const greenLight = new THREE.PointLight(0x4ade80, 1, 100);
+        greenLight.position.set(5, 10, 5);
+        scene.add(greenLight);
 
-        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
-        directionalLight2.position.set(-5, 5, -5);
-        scene.add(directionalLight2);
+        const orangeLight = new THREE.PointLight(0xfb923c, 0.5, 100);
+        orangeLight.position.set(-5, 5, -5);
+        scene.add(orangeLight);
 
         createADUModel(scene);
 
         const animate = () => {
           requestAnimationFrame(animate);
           if (aduRef.current) {
-            aduRef.current.rotation.y += 0.003;
+            aduRef.current.rotation.y += 0.002;
           }
           renderer.render(scene, camera);
         };
@@ -163,7 +144,7 @@
 
         return () => {
           window.removeEventListener('resize', handleResize);
-          if (renderer) renderer.dispose();
+          renderer.dispose();
         };
       }, []);
 
@@ -172,41 +153,67 @@
           sceneRef.current.remove(aduRef.current);
           createADUModel(sceneRef.current);
         }
-      }, [selectedConfig]);
+      }, [config]);
 
       const createADUModel = (scene) => {
         if (typeof THREE === 'undefined') return;
         
         const aduGroup = new THREE.Group();
 
-        const colorMap = {
-          charcoal: 0x3a3a3a,
-          sage: 0x8a9a7a,
-          modern: 0x4a5a6a,
-          white: 0xe8e8e8
-        };
-
-        const wallColor = colorMap[selectedConfig.exteriorColor] || 0x4a5a6a;
-
+        // Main structure with green tint
         const wallGeometry = new THREE.BoxGeometry(4, 2.5, 3);
-        const wallMaterial = new THREE.MeshStandardMaterial({ color: wallColor });
+        const wallMaterial = new THREE.MeshStandardMaterial({ 
+          color: 0x2d5f3f,
+          metalness: 0.3,
+          roughness: 0.7
+        });
         const walls = new THREE.Mesh(wallGeometry, wallMaterial);
         walls.position.y = 1.25;
         aduGroup.add(walls);
 
-        const roofGeometry = new THREE.BoxGeometry(4.4, 0.3, 3.4);
-        const roofMaterial = new THREE.MeshStandardMaterial({ color: 0x2a2a2a });
+        // Roof with solar panels
+        const roofGeometry = new THREE.BoxGeometry(4.4, 0.2, 3.4);
+        const roofMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a1a });
         const roof = new THREE.Mesh(roofGeometry, roofMaterial);
-        roof.position.y = 2.65;
+        roof.position.y = 2.6;
         aduGroup.add(roof);
 
+        // Solar panels
+        if (config.solar > 0) {
+          const panelGeometry = new THREE.BoxGeometry(3.5, 0.05, 2.8);
+          const panelMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x1a3a5a,
+            metalness: 0.9,
+            roughness: 0.1,
+            emissive: 0x4ade80,
+            emissiveIntensity: 0.1
+          });
+          const panels = new THREE.Mesh(panelGeometry, panelMaterial);
+          panels.position.set(0, 2.75, 0);
+          panels.rotation.x = -0.15;
+          aduGroup.add(panels);
+        }
+
+        // Green roof vegetation
+        if (config.greenRoof) {
+          const vegGeometry = new THREE.BoxGeometry(4.2, 0.3, 3.2);
+          const vegMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x2d7f2d,
+            roughness: 0.9
+          });
+          const vegetation = new THREE.Mesh(vegGeometry, vegMaterial);
+          vegetation.position.set(0, 2.75, 0);
+          aduGroup.add(vegetation);
+        }
+
+        // Windows with glow
         const windowGeometry = new THREE.BoxGeometry(0.05, 0.8, 0.6);
         const windowMaterial = new THREE.MeshStandardMaterial({ 
-          color: 0x87ceeb, 
-          transparent: true, 
-          opacity: 0.6,
-          emissive: 0x87ceeb,
-          emissiveIntensity: 0.2
+          color: 0x4ade80,
+          transparent: true,
+          opacity: 0.7,
+          emissive: 0x4ade80,
+          emissiveIntensity: 0.3
         });
 
         const window1 = new THREE.Mesh(windowGeometry, windowMaterial);
@@ -217,43 +224,11 @@
         window2.position.set(1, 1.5, 1.51);
         aduGroup.add(window2);
 
-        const doorGeometry = new THREE.BoxGeometry(0.05, 1.5, 0.8);
-        const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x4a2c1a });
-        const door = new THREE.Mesh(doorGeometry, doorMaterial);
-        door.position.set(0, 0.75, 1.51);
-        aduGroup.add(door);
-
-        if (selectedConfig.solarPanels) {
-          const panelGeometry = new THREE.BoxGeometry(1.5, 0.05, 1.2);
-          const panelMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x1a1a3a,
-            metalness: 0.8,
-            roughness: 0.2
-          });
-          
-          const panel1 = new THREE.Mesh(panelGeometry, panelMaterial);
-          panel1.position.set(-0.8, 2.85, 0);
-          panel1.rotation.x = -0.2;
-          aduGroup.add(panel1);
-
-          const panel2 = new THREE.Mesh(panelGeometry, panelMaterial);
-          panel2.position.set(0.8, 2.85, 0);
-          panel2.rotation.x = -0.2;
-          aduGroup.add(panel2);
-        }
-
-        if (selectedConfig.patio) {
-          const patioGeometry = new THREE.BoxGeometry(4, 0.1, 1.5);
-          const patioMaterial = new THREE.MeshStandardMaterial({ color: 0x8b7355 });
-          const patio = new THREE.Mesh(patioGeometry, patioMaterial);
-          patio.position.set(0, 0.05, 2.5);
-          aduGroup.add(patio);
-        }
-
-        const foundationGeometry = new THREE.BoxGeometry(4.2, 0.3, 3.2);
-        const foundationMaterial = new THREE.MeshStandardMaterial({ color: 0x5a5a5a });
+        // Foundation
+        const foundationGeometry = new THREE.BoxGeometry(4.2, 0.4, 3.2);
+        const foundationMaterial = new THREE.MeshStandardMaterial({ color: 0x3a3a3a });
         const foundation = new THREE.Mesh(foundationGeometry, foundationMaterial);
-        foundation.position.y = 0.15;
+        foundation.position.y = 0.2;
         aduGroup.add(foundation);
 
         scene.add(aduGroup);
@@ -261,385 +236,665 @@
       };
 
       const calculatePrice = () => {
-        let basePrice = 0;
-        if (selectedConfig.model === 'studio') basePrice = 149000;
-        if (selectedConfig.model === 'suite') basePrice = 189000;
-        if (selectedConfig.model === 'villa') basePrice = 249000;
+        const basePrices = { standard: 149000, eco: 179000, netzero: 209000, ultimate: 249000 };
+        let price = basePrices[config.model] || 179000;
 
-        if (selectedConfig.finish === 'premium') basePrice += 15000;
-        if (selectedConfig.finish === 'luxury') basePrice += 35000;
-        if (selectedConfig.solarPanels) basePrice += 18000;
-        if (selectedConfig.patio) basePrice += 8000;
-        if (selectedConfig.fixtures === 'premium') basePrice += 5000;
-        if (selectedConfig.fixtures === 'luxury') basePrice += 12000;
-        if (selectedConfig.flooring === 'hardwood') basePrice += 8000;
-        if (selectedConfig.flooring === 'luxury-vinyl') basePrice += 3000;
-        if (selectedConfig.appliances === 'stainless') basePrice += 4000;
-        if (selectedConfig.appliances === 'high-end') basePrice += 9000;
-        if (selectedConfig.smartHome) basePrice += 6000;
-        if (selectedConfig.hvac === 'heat-pump') basePrice += 3000;
+        if (config.construction === 'sip') price += 6000;
+        price += config.solar * 3000;
+        if (config.battery) price += 12000;
+        if (config.hvac === 'heat-pump') price += 3000;
+        if (config.smartHome === 'premium') price += 4000;
+        if (config.smartHome === 'ultimate') price += 8000;
+        if (config.evCharger) price += 2000;
+        if (config.greenRoof) price += 15000;
+        if (config.rainwater) price += 4000;
 
-        return basePrice;
+        return price;
+      };
+
+      const calculateRebates = () => {
+        let rebates = 0;
+        
+        // Federal solar credit (30%)
+        if (config.solar > 0) {
+          rebates += (config.solar * 3000) * 0.30;
+        }
+        
+        // SGIP battery rebate
+        if (config.battery) {
+          rebates += 13500;
+        }
+        
+        // TECH heat pump rebate
+        if (config.hvac === 'heat-pump') {
+          rebates += 3000;
+        }
+        
+        // Section 45L builder credit
+        rebates += 5000;
+        
+        return Math.round(rebates);
+      };
+
+      const calculateMonthlySavings = () => {
+        let savings = 0;
+        
+        if (config.solar > 0) savings += config.solar * 25;
+        if (config.hvac === 'heat-pump') savings += 40;
+        if (config.construction === 'sip') savings += 60;
+        if (config.battery) savings += 20;
+        if (config.rainwater) savings += 15;
+        
+        return Math.round(savings);
+      };
+
+      const calculateCO2Savings = () => {
+        let co2 = 0;
+        
+        if (config.solar > 0) co2 += config.solar * 1200;
+        if (config.hvac === 'heat-pump') co2 += 800;
+        if (config.construction === 'sip') co2 += 1500;
+        
+        return Math.round(co2);
       };
 
       const models = [
-        { id: 'studio', name: 'Galaxy Studio', size: 400, beds: 0, baths: 1, desc: 'Perfect for home office or rental income', rent: 1800 },
-        { id: 'suite', name: 'Galaxy Suite', size: 600, beds: 1, baths: 1, desc: 'Ideal for guests or rental unit', rent: 2200 },
-        { id: 'villa', name: 'Galaxy Villa', size: 800, beds: 2, baths: 1.5, desc: 'Spacious living for family or premium rental', rent: 2800 }
+        { id: 'standard', name: 'Galaxy Standard', price: 149000, desc: 'Quality construction, great value' },
+        { id: 'eco', name: 'Galaxy Eco', price: 179000, desc: 'SIP panels, heat pump, smart home basics', tag: 'POPULAR' },
+        { id: 'netzero', name: 'Galaxy Net-Zero', price: 209000, desc: 'Solar, battery, advanced efficiency', tag: 'BEST VALUE' },
+        { id: 'ultimate', name: 'Galaxy Ultimate', price: 249000, desc: 'Living roof, max solar, full automation', tag: 'PREMIUM' }
       ];
 
       const Navigation = () => (
-        <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
+        <nav className="fixed top-0 w-full glass-effect z-50">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">G</span>
+              <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setCurrentPage('home')}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center neon-border">
+                  <LeafIcon className="text-brand-green" size={28} />
                 </div>
-                <span className="text-white font-bold text-xl">Green Galaxy</span>
+                <div>
+                  <div className="text-brand-green font-bold text-lg">GREEN GALAXY</div>
+                  <div className="text-brand-orange text-xs">BUILDERS, INC.</div>
+                </div>
               </div>
 
               <div className="hidden md:flex space-x-8">
-                <button onClick={() => setCurrentPage('home')} className={`${currentPage === 'home' ? 'text-blue-400' : 'text-gray-300'} hover:text-white transition flex items-center space-x-2`}>
-                  <HomeIcon size={18} />
-                  <span>Home</span>
+                <button onClick={() => setCurrentPage('home')} className={`${currentPage === 'home' ? 'text-brand-green' : 'text-gray-400'} hover:text-brand-green transition`}>
+                  Home
                 </button>
-                <button onClick={() => setCurrentPage('customize')} className={`${currentPage === 'customize' ? 'text-blue-400' : 'text-gray-300'} hover:text-white transition flex items-center space-x-2`}>
-                  <SettingsIcon size={18} />
-                  <span>Design</span>
+                <button onClick={() => setCurrentPage('configurator')} className={`${currentPage === 'configurator' ? 'text-brand-green' : 'text-gray-400'} hover:text-brand-green transition`}>
+                  Design Your ADU
                 </button>
-                <button onClick={() => setCurrentPage('contact')} className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition">
+                <button onClick={() => setCurrentPage('sustainability')} className={`${currentPage === 'sustainability' ? 'text-brand-green' : 'text-gray-400'} hover:text-brand-green transition`}>
+                  Sustainability
+                </button>
+                <button onClick={() => setCurrentPage('contact')} className="bg-brand-gradient text-white px-6 py-2 rounded-lg font-semibold glow-green hover:glow-orange transition">
                   Get Started
                 </button>
               </div>
 
-              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white">
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-brand-green">
                 {mobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
               </button>
             </div>
 
             {mobileMenuOpen && (
               <div className="md:hidden pb-4 space-y-2">
-                <button onClick={() => { setCurrentPage('home'); setMobileMenuOpen(false); }} className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 rounded">Home</button>
-                <button onClick={() => { setCurrentPage('customize'); setMobileMenuOpen(false); }} className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 rounded">Design</button>
-                <button onClick={() => { setCurrentPage('contact'); setMobileMenuOpen(false); }} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold">Get Started</button>
+                <button onClick={() => { setCurrentPage('home'); setMobileMenuOpen(false); }} className="block w-full text-left px-4 py-2 text-gray-400 hover:text-brand-green rounded">Home</button>
+                <button onClick={() => { setCurrentPage('configurator'); setMobileMenuOpen(false); }} className="block w-full text-left px-4 py-2 text-gray-400 hover:text-brand-green rounded">Configurator</button>
+                <button onClick={() => { setCurrentPage('contact'); setMobileMenuOpen(false); }} className="w-full bg-brand-gradient text-white px-4 py-2 rounded-lg font-semibold">Get Started</button>
               </div>
             )}
           </div>
         </nav>
       );
 
-      const HomePage = () => (
-        <div className="pt-16">
-          <section className="bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 min-h-screen flex items-center">
-            <div className="max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                  Your Dream ADU in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">5 Months</span>
-                </h1>
-                <p className="text-xl text-gray-300 mb-8">
-                  Factory-built quality. Turnkey service. Built to your specifications. From permits to move-in, we handle everything.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <button onClick={() => setCurrentPage('customize')} className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition flex items-center space-x-2">
-                    <span>Start Designing</span>
-                    <ChevronRightIcon size={20} />
-                  </button>
-                  <button onClick={() => setCurrentPage('contact')} className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-gray-900 transition">
-                    Get Free Quote
-                  </button>
-                </div>
-
-                <div className="mt-12 grid grid-cols-3 gap-6">
-                  <div>
-                    <div className="text-3xl font-bold text-blue-400">5-6</div>
-                    <div className="text-gray-400">Months Average</div>
+      const HomePage = () => {
+        const price = calculatePrice();
+        const rebates = calculateRebates();
+        const finalPrice = price - rebates;
+        
+        return (
+          <div className="pt-16">
+            {/* Hero */}
+            <section className="min-h-screen flex items-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-950 via-black to-orange-950 opacity-50"></div>
+              <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(74, 222, 128, 0.1) 0%, transparent 50%),radial-gradient(circle at 80% 80%, rgba(251, 146, 60, 0.1) 0%, transparent 50%)'}}></div>
+              
+              <div className="max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center relative z-10">
+                <div>
+                  <div className="inline-block px-4 py-2 rounded-full glass-effect border border-brand-green mb-6">
+                    <span className="text-brand-green font-semibold">🌱 Net-Zero Energy ADUs</span>
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold text-purple-400">$2,200</div>
-                    <div className="text-gray-400">Avg Monthly Rent</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-pink-400">100+</div>
-                    <div className="text-gray-400">Happy Clients</div>
-                  </div>
-                </div>
-              </div>
+                  
+                  <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+                    Build Your
+                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-orange-400">
+                      Sustainable Future
+                    </span>
+                  </h1>
+                  
+                  <p className="text-xl text-gray-300 mb-8">
+                    Factory-built with SIP panels. Solar + battery included. Energy bills under $30/month. $20K+ in rebates available.
+                  </p>
 
-              <div className="relative">
-                <canvas ref={canvasRef} className="w-full h-[500px] rounded-2xl shadow-2xl" />
-                <div className="absolute bottom-4 right-4 bg-gray-900/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-gray-700">
-                  <div className="text-white font-semibold">{models.find(m => m.id === selectedConfig.model)?.name}</div>
-                  <div className="text-blue-400 text-2xl font-bold">${calculatePrice().toLocaleString()}</div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="py-20 bg-gray-900">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="grid md:grid-cols-4 gap-8">
-                <div className="text-center">
-                  <ClockIcon className="w-12 h-12 text-blue-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">Fast Timeline</h3>
-                  <p className="text-gray-400">5-6 months from permit to move-in</p>
-                </div>
-                <div className="text-center">
-                  <CheckIcon className="w-12 h-12 text-green-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">Turnkey Service</h3>
-                  <p className="text-gray-400">We handle permits, site prep, installation</p>
-                </div>
-                <div className="text-center">
-                  <DollarIcon className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">ROI Focused</h3>
-                  <p className="text-gray-400">ADUs typically pay for themselves in 7-10 years</p>
-                </div>
-                <div className="text-center">
-                  <StarIcon className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">Premium Quality</h3>
-                  <p className="text-gray-400">Factory-built to exceed California standards</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-            <div className="max-w-7xl mx-auto px-4">
-              <h2 className="text-4xl font-bold text-white text-center mb-4">Choose Your Model</h2>
-              <p className="text-xl text-gray-400 text-center mb-12">Three signature designs, infinite possibilities</p>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {models.map(model => (
-                  <div key={model.id} className="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700 hover:border-blue-500 transition group">
-                    <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-6xl font-bold">
-                      {model.size}
-                      <span className="text-2xl">ftÂ²</span>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-2xl font-bold text-white mb-2">{model.name}</h3>
-                      <div className="flex items-center space-x-4 text-gray-400 mb-4">
-                        <span>{model.beds} Bed</span>
-                        <span>â€¢</span>
-                        <span>{model.baths} Bath</span>
-                      </div>
-                      <p className="text-gray-400 mb-4">{model.desc}</p>
-                      <div className="text-green-400 font-semibold mb-4">Avg Rent: ${model.rent}/mo</div>
-                      <button onClick={() => { setSelectedConfig({...selectedConfig, model: model.id}); setCurrentPage('customize'); }} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold group-hover:shadow-lg group-hover:shadow-blue-500/50 transition">
-                        Customize This Model
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-      );
-
-      const CustomizePage = () => (
-        <div className="pt-16 bg-gray-900 min-h-screen">
-          <div className="max-w-7xl mx-auto px-4 py-12">
-            <h1 className="text-4xl font-bold text-white mb-8">Design Your Perfect ADU</h1>
-
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
-                <div className="bg-gray-800 rounded-2xl p-6">
-                  <canvas ref={canvasRef} className="w-full h-[500px] rounded-xl" />
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-2xl p-6">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div>
-                      <div className="text-gray-300 mb-2">Your Custom ADU</div>
-                      <div className="text-4xl font-bold text-white">${calculatePrice().toLocaleString()}</div>
-                      <div className="text-gray-400 mt-2">Est. monthly rent: ${models.find(m => m.id === selectedConfig.model)?.rent || 0}/mo</div>
-                    </div>
-                    <button onClick={() => setCurrentPage('contact')} className="bg-white text-gray-900 px-6 py-3 rounded-lg font-bold hover:shadow-xl transition">
-                      Get Quote
+                  <div className="flex flex-wrap gap-4 mb-12">
+                    <button onClick={() => setCurrentPage('configurator')} className="bg-brand-gradient text-white px-8 py-4 rounded-lg font-bold text-lg glow-green hover:scale-105 transition flex items-center space-x-2">
+                      <ZapIcon size={20} />
+                      <span>Design Your ADU</span>
+                      <ChevronRightIcon size={20} />
+                    </button>
+                    <button className="border-2 border-brand-green text-brand-green px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-900/20 transition">
+                      View Rebates
                     </button>
                   </div>
+
+                  <div className="grid grid-cols-3 gap-6">
+                    <div className="glass-effect p-4 rounded-lg">
+                      <div className="text-3xl font-bold text-brand-green">${(finalPrice/1000).toFixed(0)}K</div>
+                      <div className="text-gray-400 text-sm">After Rebates</div>
+                    </div>
+                    <div className="glass-effect p-4 rounded-lg">
+                      <div className="text-3xl font-bold text-brand-orange">$30</div>
+                      <div className="text-gray-400 text-sm">Monthly Energy</div>
+                    </div>
+                    <div className="glass-effect p-4 rounded-lg">
+                      <div className="text-3xl font-bold text-brand-green">100%</div>
+                      <div className="text-gray-400 text-sm">Turnkey</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <canvas ref={canvasRef} className="w-full h-[500px] rounded-2xl neon-border" />
+                  <div className="absolute top-4 right-4 glass-effect px-4 py-3 rounded-lg neon-border">
+                    <div className="text-brand-green text-sm font-semibold">LIVE PREVIEW</div>
+                    <div className="text-white font-bold text-2xl">${price.toLocaleString()}</div>
+                    <div className="text-brand-orange text-xs">-${rebates.toLocaleString()} rebates</div>
+                  </div>
                 </div>
               </div>
+            </section>
 
-              <div className="space-y-6">
-                <div className="bg-gray-800 rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <HomeIcon className="mr-2" size={20} />
-                    Select Model
-                  </h3>
-                  <div className="space-y-3">
-                    {models.map(model => (
+            {/* Eco Stats Banner */}
+            <section className="py-12 bg-gradient-to-r from-green-900 to-orange-900 border-y-2 border-brand-green">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="grid md:grid-cols-4 gap-8 text-center">
+                  <div>
+                    <LeafIcon className="w-12 h-12 text-brand-green mx-auto mb-3" />
+                    <div className="text-3xl font-bold text-white">{calculateCO2Savings().toLocaleString()}</div>
+                    <div className="text-gray-300">lbs CO₂ saved yearly</div>
+                  </div>
+                  <div>
+                    <ZapIcon className="w-12 h-12 text-brand-orange mx-auto mb-3" />
+                    <div className="text-3xl font-bold text-white">{config.solar * 7500}</div>
+                    <div className="text-gray-300">kWh generated yearly</div>
+                  </div>
+                  <div>
+                    <DollarIcon className="w-12 h-12 text-brand-green mx-auto mb-3" />
+                    <div className="text-3xl font-bold text-white">${calculateMonthlySavings()}</div>
+                    <div className="text-gray-300">Monthly savings</div>
+                  </div>
+                  <div>
+                    <ShieldIcon className="w-12 h-12 text-brand-orange mx-auto mb-3" />
+                    <div className="text-3xl font-bold text-white">${rebates.toLocaleString()}</div>
+                    <div className="text-gray-300">Available rebates</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Package Tiers */}
+            <section className="py-20 bg-black">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="text-center mb-16">
+                  <h2 className="text-5xl font-bold text-white mb-4">Choose Your Package</h2>
+                  <p className="text-xl text-gray-400">From energy-efficient to net-zero. All Tesla Powerwall compatible.</p>
+                </div>
+
+                <div className="grid md:grid-cols-4 gap-6">
+                  {models.map(model => (
+                    <div key={model.id} className={`glass-effect rounded-2xl p-6 hover:border-brand-green transition ${config.model === model.id ? 'neon-border' : ''}`}>
+                      {model.tag && (
+                        <div className="inline-block px-3 py-1 rounded-full bg-brand-gradient text-white text-xs font-bold mb-4">
+                          {model.tag}
+                        </div>
+                      )}
+                      
+                      <h3 className="text-2xl font-bold text-white mb-2">{model.name}</h3>
+                      <div className="text-4xl font-bold text-brand-green mb-4">${(model.price/1000).toFixed(0)}K</div>
+                      <p className="text-gray-400 mb-6 text-sm">{model.desc}</p>
+                      
+                      <button 
+                        onClick={() => { setConfig({...config, model: model.id}); setCurrentPage('configurator'); }}
+                        className="w-full bg-brand-gradient text-white py-3 rounded-lg font-semibold hover:glow-green transition"
+                      >
+                        Customize
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Partnerships */}
+            <section className="py-16 bg-gradient-to-b from-black to-green-950">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="text-center mb-12">
+                  <h3 className="text-3xl font-bold text-white mb-4">Certified Partners</h3>
+                  <p className="text-gray-400">Working with industry leaders in sustainable technology</p>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+                  {['Tesla Powerwall', 'Premier SIPS', 'Mitsubishi', 'LEED', 'Energy Star'].map(partner => (
+                    <div key={partner} className="glass-effect p-6 rounded-lg text-center">
+                      <div className="text-brand-green font-bold">{partner}</div>
+                      <div className="text-gray-500 text-xs mt-1">Certified Installer</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Mobile Home Parks */}
+            <section className="py-20 bg-black border-y-2 border-brand-green">
+              <div className="max-w-5xl mx-auto px-4 text-center">
+                <HomeModernIcon className="w-16 h-16 text-brand-orange mx-auto mb-6" />
+                <h2 className="text-4xl font-bold text-white mb-4">Mobile Home Park Developers</h2>
+                <p className="text-xl text-gray-400 mb-8">
+                  Replace aging infrastructure with modern, sustainable dwellings. Net-zero ready. Park-approved designs available.
+                </p>
+                <button className="bg-brand-gradient text-white px-8 py-4 rounded-lg font-bold glow-orange hover:scale-105 transition">
+                  Partnership Inquiries
+                </button>
+              </div>
+            </section>
+          </div>
+        );
+      };
+
+      const ConfiguratorPage = () => {
+        const price = calculatePrice();
+        const rebates = calculateRebates();
+        const monthly = calculateMonthlySavings();
+        const co2 = calculateCO2Savings();
+
+        return (
+          <div className="pt-16 bg-black min-h-screen">
+            <div className="max-w-7xl mx-auto px-4 py-12">
+              <div className="text-center mb-8">
+                <h1 className="text-5xl font-bold text-white mb-4">Design Your Dream ADU</h1>
+                <p className="text-xl text-gray-400">Real-time pricing • Instant rebate calculation • Full customization</p>
+              </div>
+
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* 3D Preview */}
+                <div className="lg:col-span-2 space-y-6">
+                  <div className="glass-effect rounded-2xl p-6 neon-border">
+                    <canvas ref={canvasRef} className="w-full h-[500px] rounded-xl" />
+                  </div>
+
+                  {/* Price & Sustainability Dashboard */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-gradient-to-br from-green-900 to-green-950 rounded-2xl p-6 border-2 border-brand-green">
+                      <div className="text-brand-green text-sm font-semibold mb-2">YOUR INVESTMENT</div>
+                      <div className="text-5xl font-bold text-white mb-2">${price.toLocaleString()}</div>
+                      <div className="text-brand-orange font-semibold mb-4">- ${rebates.toLocaleString()} rebates</div>
+                      <div className="border-t-2 border-brand-green pt-4">
+                        <div className="text-white text-3xl font-bold">${(price - rebates).toLocaleString()}</div>
+                        <div className="text-gray-400">Final Cost</div>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-orange-900 to-orange-950 rounded-2xl p-6 border-2 border-brand-orange">
+                      <div className="text-brand-orange text-sm font-semibold mb-4">SUSTAINABILITY SCORE</div>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <LeafIcon className="text-brand-green" size={20} />
+                            <span className="text-white">CO₂ Saved</span>
+                          </div>
+                          <span className="text-brand-green font-bold">{co2.toLocaleString()} lbs/yr</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <DollarIcon className="text-brand-orange" size={20} />
+                            <span className="text-white">Monthly Savings</span>
+                          </div>
+                          <span className="text-brand-orange font-bold">${monthly}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <ZapIcon className="text-brand-green" size={20} />
+                            <span className="text-white">Energy Generated</span>
+                          </div>
+                          <span className="text-brand-green font-bold">{config.solar * 7500} kWh/yr</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Configuration Options */}
+                <div className="space-y-6">
+                  {/* Package Selection */}
+                  <div className="glass-effect rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                      <HomeIcon className="mr-2 text-brand-green" size={20} />
+                      Package
+                    </h3>
+                    <div className="space-y-3">
+                      {models.map(model => (
+                        <button
+                          key={model.id}
+                          onClick={() => setConfig({...config, model: model.id})}
+                          className={`w-full p-4 rounded-lg border-2 transition text-left ${config.model === model.id ? 'border-brand-green bg-green-900/20' : 'border-gray-700 hover:border-brand-green'}`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-white font-semibold">{model.name}</div>
+                              <div className="text-gray-400 text-sm">${(model.price/1000).toFixed(0)}K base</div>
+                            </div>
+                            {config.model === model.id && <CheckIcon className="text-brand-green" size={20} />}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Construction */}
+                  <div className="glass-effect rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                      <HomeModernIcon className="mr-2 text-brand-green" size={20} />
+                      Construction
+                    </h3>
+                    <div className="space-y-3">
                       <button
-                        key={model.id}
-                        onClick={() => setSelectedConfig({...selectedConfig, model: model.id})}
-                        className={`w-full p-4 rounded-lg border-2 transition ${selectedConfig.model === model.id ? 'border-blue-500 bg-blue-900/30' : 'border-gray-700 hover:border-gray-600'}`}
+                        onClick={() => setConfig({...config, construction: config.construction === 'sip' ? 'standard' : 'sip'})}
+                        className={`w-full p-4 rounded-lg border-2 transition ${config.construction === 'sip' ? 'border-brand-green bg-green-900/20' : 'border-gray-700'}`}
                       >
                         <div className="flex items-center justify-between">
                           <div className="text-left">
-                            <div className="text-white font-semibold">{model.name}</div>
-                            <div className="text-gray-400 text-sm">{model.size} sq ft</div>
+                            <div className="text-white font-semibold">SIP Panel Construction</div>
+                            <div className="text-gray-400 text-sm">60% more efficient, faster build</div>
                           </div>
-                          {selectedConfig.model === model.id && <CheckIcon className="text-blue-400" size={20} />}
+                          <div className="text-brand-orange font-semibold">+$6,000</div>
                         </div>
                       </button>
-                    ))}
+                    </div>
                   </div>
-                </div>
 
-                <div className="bg-gray-800 rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <PaletteIcon className="mr-2" size={20} />
-                    Exterior Color
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {['charcoal', 'sage', 'modern', 'white'].map(color => (
+                  {/* Solar System */}
+                  <div className="glass-effect rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                      <SunIcon className="mr-2 text-brand-orange" size={20} />
+                      Solar System
+                    </h3>
+                    <div className="mb-3">
+                      <div className="flex justify-between text-white mb-2">
+                        <span>Solar Capacity</span>
+                        <span className="text-brand-green font-bold">{config.solar}kW</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="1"
+                        value={config.solar}
+                        onChange={(e) => setConfig({...config, solar: parseInt(e.target.value)})}
+                        className="w-full"
+                      />
+                      <div className="text-sm text-gray-400 mt-1">
+                        Generates ~{config.solar * 7500} kWh/year • ${config.solar * 3000}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Premium Features */}
+                  <div className="glass-effect rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                      <ZapIcon className="mr-2 text-brand-green" size={20} />
+                      Premium Features
+                    </h3>
+                    <div className="space-y-3">
                       <button
-                        key={color}
-                        onClick={() => setSelectedConfig({...selectedConfig, exteriorColor: color})}
-                        className={`p-4 rounded-lg border-2 capitalize transition ${selectedConfig.exteriorColor === color ? 'border-blue-500 bg-blue-900/30' : 'border-gray-700 hover:border-gray-600'}`}
+                        onClick={() => setConfig({...config, battery: !config.battery})}
+                        className={`w-full p-4 rounded-lg border-2 transition ${config.battery ? 'border-brand-green bg-green-900/20' : 'border-gray-700'}`}
                       >
-                        <div className="text-white">{color}</div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-left flex items-center space-x-2">
+                            <BatteryIcon className="text-brand-orange" size={20} />
+                            <div>
+                              <div className="text-white font-semibold">Tesla Powerwall</div>
+                              <div className="text-gray-400 text-xs">13.5kWh • $13.5K rebate</div>
+                            </div>
+                          </div>
+                          <div className="text-brand-orange font-semibold">+$12K</div>
+                        </div>
                       </button>
-                    ))}
+
+                      <button
+                        onClick={() => setConfig({...config, evCharger: !config.evCharger})}
+                        className={`w-full p-4 rounded-lg border-2 transition ${config.evCharger ? 'border-brand-green bg-green-900/20' : 'border-gray-700'}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="text-left flex items-center space-x-2">
+                            <ZapIcon className="text-brand-green" size={20} />
+                            <div>
+                              <div className="text-white font-semibold">EV Charger Ready</div>
+                              <div className="text-gray-400 text-xs">Level 2 pre-wired</div>
+                            </div>
+                          </div>
+                          <div className="text-brand-green font-semibold">+$2K</div>
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => setConfig({...config, greenRoof: !config.greenRoof})}
+                        className={`w-full p-4 rounded-lg border-2 transition ${config.greenRoof ? 'border-brand-green bg-green-900/20' : 'border-gray-700'}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="text-left flex items-center space-x-2">
+                            <LeafIcon className="text-brand-green" size={20} />
+                            <div>
+                              <div className="text-white font-semibold">Living Green Roof</div>
+                              <div className="text-gray-400 text-xs">Insulation + nature</div>
+                            </div>
+                          </div>
+                          <div className="text-brand-orange font-semibold">+$15K</div>
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => setConfig({...config, rainwater: !config.rainwater})}
+                        className={`w-full p-4 rounded-lg border-2 transition ${config.rainwater ? 'border-brand-green bg-green-900/20' : 'border-gray-700'}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="text-left flex items-center space-x-2">
+                            <DropletIcon className="text-blue-400" size={20} />
+                            <div>
+                              <div className="text-white font-semibold">Rainwater Collection</div>
+                              <div className="text-gray-400 text-xs">500gal system</div>
+                            </div>
+                          </div>
+                          <div className="text-brand-orange font-semibold">+$4K</div>
+                        </div>
+                      </button>
+                    </div>
                   </div>
-                </div>
 
-                <div className="bg-gray-800 rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
-                    <ZapIcon className="mr-2" size={20} />
-                    Premium Add-ons
-                  </h3>
-                  <div className="space-y-3">
-                    <button
-                      onClick={() => setSelectedConfig({...selectedConfig, solarPanels: !selectedConfig.solarPanels})}
-                      className={`w-full p-4 rounded-lg border-2 transition ${selectedConfig.solarPanels ? 'border-green-500 bg-green-900/30' : 'border-gray-700 hover:border-gray-600'}`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="text-left flex items-center space-x-3">
-                          <ZapIcon className="text-yellow-400" size={20} />
-                          <div>
-                            <div className="text-white font-semibold">Solar Panels</div>
-                            <div className="text-gray-400 text-sm">3kW system</div>
-                          </div>
-                        </div>
-                        <div className="text-green-400 font-semibold">+$18,000</div>
-                      </div>
-                    </button>
-
-                    <button
-                      onClick={() => setSelectedConfig({...selectedConfig, patio: !selectedConfig.patio})}
-                      className={`w-full p-4 rounded-lg border-2 transition ${selectedConfig.patio ? 'border-green-500 bg-green-900/30' : 'border-gray-700 hover:border-gray-600'}`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="text-left flex items-center space-x-3">
-                          <MaximizeIcon className="text-blue-400" size={20} />
-                          <div>
-                            <div className="text-white font-semibold">Covered Patio</div>
-                            <div className="text-gray-400 text-sm">150 sq ft deck</div>
-                          </div>
-                        </div>
-                        <div className="text-green-400 font-semibold">+$8,000</div>
-                      </div>
-                    </button>
-
-                    <button
-                      onClick={() => setSelectedConfig({...selectedConfig, smartHome: !selectedConfig.smartHome})}
-                      className={`w-full p-4 rounded-lg border-2 transition ${selectedConfig.smartHome ? 'border-green-500 bg-green-900/30' : 'border-gray-700 hover:border-gray-600'}`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="text-left flex items-center space-x-3">
-                          <LightbulbIcon className="text-purple-400" size={20} />
-                          <div>
-                            <div className="text-white font-semibold">Smart Home Package</div>
-                            <div className="text-gray-400 text-sm">Thermostat, locks, lights</div>
-                          </div>
-                        </div>
-                        <div className="text-green-400 font-semibold">+$6,000</div>
-                      </div>
-                    </button>
-                  </div>
+                  {/* CTA */}
+                  <button onClick={() => setCurrentPage('contact')} className="w-full bg-brand-gradient text-white py-4 rounded-lg font-bold text-lg glow-green hover:scale-105 transition">
+                    Get Your Free Quote
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
+        );
+      };
+
+      const SustainabilityPage = () => (
+        <div className="pt-16 bg-black min-h-screen">
+          <div className="max-w-7xl mx-auto px-4 py-12">
+            <div className="text-center mb-16">
+              <h1 className="text-6xl font-bold text-white mb-6">Built for a Sustainable Future</h1>
+              <p className="text-2xl text-gray-400">Net-zero ready. Factory precision. Green certifications.</p>
+            </div>
+
+            {/* Rebates Section */}
+            <section className="mb-20">
+              <div className="glass-effect rounded-2xl p-12 neon-border">
+                <h2 className="text-4xl font-bold text-white mb-8 text-center">Available Rebates & Incentives</h2>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-green-900/30 flex items-center justify-center">
+                        <DollarIcon className="text-brand-green" size={24} />
+                      </div>
+                      <div>
+                        <div className="text-brand-green font-bold text-xl mb-2">Federal Solar Credit (30%)</div>
+                        <div className="text-gray-300">Save up to $9,000 on solar installation through 2032</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-orange-900/30 flex items-center justify-center">
+                        <BatteryIcon className="text-brand-orange" size={24} />
+                      </div>
+                      <div>
+                        <div className="text-brand-orange font-bold text-xl mb-2">SGIP Battery Rebate</div>
+                        <div className="text-gray-300">$13,500 for Tesla Powerwall installation</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-green-900/30 flex items-center justify-center">
+                        <ThermometerIcon className="text-brand-green" size={24} />
+                      </div>
+                      <div>
+                        <div className="text-brand-green font-bold text-xl mb-2">TECH Clean California</div>
+                        <div className="text-gray-300">$3,000 heat pump rebate available</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-orange-900/30 flex items-center justify-center">
+                        <HomeIcon className="text-brand-orange" size={24} />
+                      </div>
+                      <div>
+                        <div className="text-brand-orange font-bold text-xl mb-2">Section 45L Builder Credit</div>
+                        <div className="text-gray-300">$5,000 federal tax credit for energy-efficient homes</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-green-900/30 flex items-center justify-center">
+                        <ZapIcon className="text-brand-green" size={24} />
+                      </div>
+                      <div>
+                        <div className="text-brand-green font-bold text-xl mb-2">Local Utility Rebates</div>
+                        <div className="text-gray-300">Additional $2,000+ from PG&E, SMUD, others</div>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-green-900 to-orange-900 p-6 rounded-lg border-2 border-brand-green">
+                      <div className="text-white text-3xl font-bold mb-2">$20,000+</div>
+                      <div className="text-gray-300">Total rebates available on a typical net-zero ADU</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Technology Features */}
+            <section>
+              <h2 className="text-4xl font-bold text-white mb-12 text-center">Sustainable Technologies</h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                {[
+                  { icon: <HomeModernIcon size={40} />, title: 'SIP Panel Construction', desc: '60% more energy efficient than stick-built. Airtight envelope. Faster installation.' },
+                  { icon: <SunIcon size={40} />, title: 'Solar + Battery', desc: 'Tesla Powerwall compatible. Net metering enabled. Energy independence.' },
+                  { icon: <ThermometerIcon size={40} />, title: 'Heat Pump HVAC', desc: '3x more efficient than traditional. Heating + cooling. Ultra-quiet operation.' },
+                  { icon: <LeafIcon size={40} />, title: 'Green Roof Option', desc: 'Living vegetation. Additional insulation. Stormwater management.' },
+                  { icon: <DropletIcon size={40} />, title: 'Rainwater Collection', desc: '500-gallon system. Landscape irrigation. Reduce water bills.' },
+                  { icon: <ZapIcon size={40} />, title: 'Smart Energy', desc: 'Real-time monitoring. Automated optimization. EV charger ready.' }
+                ].map((feature, idx) => (
+                  <div key={idx} className="glass-effect p-8 rounded-xl hover:border-brand-green transition">
+                    <div className="text-brand-green mb-4">{feature.icon}</div>
+                    <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                    <p className="text-gray-400">{feature.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </div>
       );
 
       const ContactPage = () => (
-        <div className="pt-16 bg-gray-900 min-h-screen">
+        <div className="pt-16 bg-black min-h-screen">
           <div className="max-w-5xl mx-auto px-4 py-12">
             <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-white mb-4">Let's Build Your ADU</h1>
-              <p className="text-xl text-gray-400">Free consultation â€¢ No obligation â€¢ Expert guidance</p>
+              <h1 className="text-5xl font-bold text-white mb-4">Start Your Sustainable Journey</h1>
+              <p className="text-xl text-gray-400">Free consultation • Rebate analysis • Site assessment</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gray-800 rounded-2xl p-8">
+              <div className="glass-effect rounded-2xl p-8 neon-border">
                 <h2 className="text-2xl font-bold text-white mb-6">Get Your Free Quote</h2>
                 <div className="space-y-4">
-                  <input type="text" placeholder="Full Name" className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none" />
-                  <input type="email" placeholder="Email" className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none" />
-                  <input type="tel" placeholder="Phone" className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none" />
-                  <textarea rows="4" placeholder="Tell us about your project..." className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none resize-none"></textarea>
-                  <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-lg font-bold text-lg hover:shadow-xl transition flex items-center justify-center space-x-2">
-                    <SendIcon size={20} />
-                    <span>Send My Information</span>
+                  <input type="text" placeholder="Full Name" className="w-full bg-black border-2 border-gray-700 rounded-lg px-4 py-3 text-white focus:border-brand-green focus:outline-none" />
+                  <input type="email" placeholder="Email" className="w-full bg-black border-2 border-gray-700 rounded-lg px-4 py-3 text-white focus:border-brand-green focus:outline-none" />
+                  <input type="tel" placeholder="Phone" className="w-full bg-black border-2 border-gray-700 rounded-lg px-4 py-3 text-white focus:border-brand-green focus:outline-none" />
+                  <select className="w-full bg-black border-2 border-gray-700 rounded-lg px-4 py-3 text-white focus:border-brand-green focus:outline-none">
+                    <option>Sacramento Area</option>
+                    <option>Bay Area</option>
+                    <option>Other California</option>
+                  </select>
+                  <textarea rows="4" placeholder="Tell us about your project and sustainability goals..." className="w-full bg-black border-2 border-gray-700 rounded-lg px-4 py-3 text-white focus:border-brand-green focus:outline-none resize-none"></textarea>
+                  <button className="w-full bg-brand-gradient text-white py-4 rounded-lg font-bold text-lg glow-green hover:scale-105 transition">
+                    Request Free Consultation
                   </button>
                 </div>
               </div>
 
               <div className="space-y-6">
-                <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-2xl p-8 border border-blue-500/30">
-                  <h3 className="text-2xl font-bold text-white mb-6">What Happens Next?</h3>
+                <div className="bg-gradient-to-br from-green-900 to-green-950 rounded-2xl p-8 border-2 border-brand-green">
+                  <h3 className="text-2xl font-bold text-white mb-6">What's Included</h3>
                   <div className="space-y-4">
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                      <div>
-                        <div className="text-white font-semibold mb-1">Free Consultation Call</div>
-                        <div className="text-gray-300 text-sm">Discuss your goals, property, and timeline (30 min)</div>
-                      </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckIcon className="text-brand-green" size={20} />
+                      <span className="text-white">Complete rebate analysis ($20K+ savings)</span>
                     </div>
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                      <div>
-                        <div className="text-white font-semibold mb-1">Site Assessment</div>
-                        <div className="text-gray-300 text-sm">On-site visit to evaluate lot and feasibility</div>
-                      </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckIcon className="text-brand-green" size={20} />
+                      <span className="text-white">Energy modeling & ROI projection</span>
                     </div>
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold">3</div>
-                      <div>
-                        <div className="text-white font-semibold mb-1">Custom Proposal</div>
-                        <div className="text-gray-300 text-sm">Detailed quote with design options and timeline</div>
-                      </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckIcon className="text-brand-green" size={20} />
+                      <span className="text-white">Site assessment & feasibility study</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckIcon className="text-brand-green" size={20} />
+                      <span className="text-white">Custom 3D renderings</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <CheckIcon className="text-brand-green" size={20} />
+                      <span className="text-white">Financing options review</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-xl p-6">
+                <div className="glass-effect rounded-xl p-6">
                   <h3 className="text-xl font-bold text-white mb-4">Contact Information</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <PhoneIcon className="text-blue-400" size={20} />
-                      <div>
-                        <div className="text-gray-400 text-sm">Phone</div>
-                        <div className="text-white font-semibold">(555) 123-4567</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <MailIcon className="text-purple-400" size={20} />
-                      <div>
-                        <div className="text-gray-400 text-sm">Email</div>
-                        <div className="text-white font-semibold">info@greengalaxy.com</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <MapPinIcon className="text-pink-400" size={20} />
-                      <div>
-                        <div className="text-gray-400 text-sm">Service Areas</div>
-                        <div className="text-white font-semibold">Sacramento & Bay Area</div>
-                      </div>
-                    </div>
+                  <div className="space-y-3 text-gray-300">
+                    <div>📞 (916) 555-GALAXY</div>
+                    <div>✉️ build@greengalaxyhomes.com</div>
+                    <div>🏢 Sacramento & Bay Area, CA</div>
+                    <div>📋 CSLB #123456 • Tesla Powerwall Certified</div>
                   </div>
                 </div>
               </div>
@@ -649,17 +904,20 @@
       );
 
       return (
-        <div className="min-h-screen bg-gray-900">
+        <div className="min-h-screen bg-black">
           <Navigation />
           {currentPage === 'home' && <HomePage />}
-          {currentPage === 'customize' && <CustomizePage />}
+          {currentPage === 'configurator' && <ConfiguratorPage />}
+          {currentPage === 'sustainability' && <SustainabilityPage />}
           {currentPage === 'contact' && <ContactPage />}
 
-          <footer className="bg-gray-950 border-t border-gray-800 py-12">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="text-center text-gray-400">
-                <p>Â© 2025 Green Galaxy ADU. Licensed Contractor CSLB #1035074. All rights reserved.</p>
-                <p className="mt-2">Sacramento, CA | Bay Area, CA | (555) 123-4567 | info@greengalaxy.com</p>
+          <footer className="bg-gradient-to-r from-green-950 to-orange-950 border-t-2 border-brand-green py-12">
+            <div className="max-w-7xl mx-auto px-4 text-center">
+              <div className="text-brand-green font-bold text-2xl mb-2">GREEN GALAXY BUILDERS, INC.</div>
+              <div className="text-brand-orange mb-4">SMARTER BUILDING SOLUTIONS</div>
+              <div className="text-gray-400">
+                © 2025 Green Galaxy Builders • Licensed CSLB #123456 • Tesla Powerwall Certified Installer
+                <br />Sacramento & Bay Area, California
               </div>
             </div>
           </footer>
@@ -667,7 +925,7 @@
       );
     };
 
-    ReactDOM.render(<ADUWebsite />, document.getElementById('root'));
+    ReactDOM.render(<GreenGalaxyWebsite />, document.getElementById('root'));
   </script>
 </body>
 </html>
